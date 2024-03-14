@@ -1,0 +1,5 @@
+version=4
+#http://www.thc.org/thc-hydra/releases/hydra-(.*)\.tar\.gz
+opts="filenamemangle=s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%hydra-$1.tar.gz%" \
+  https://github.com/vanhauser-thc/thc-hydra/tags \
+  (?:.*?/)?v?(\d[\d.]*)\.tar\.gz

@@ -1,0 +1,24 @@
+Description: Only using the supported protocols
+Forwarded: not-needed
+Author: Julián Moreno Patiño <darkjunix@gmail.com>
+Last-Update: 2020-07-30
+--- a/hydra-gtk/src/interface.c
++++ b/hydra-gtk/src/interface.c
+@@ -252,9 +252,7 @@
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "mongodb");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "mssql");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "mysql");
+-  cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "ncp");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "nntp");
+-  cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "oracle");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "oracle-listener");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "oracle-sid");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "pcnfs");
+@@ -270,7 +268,6 @@
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "rsh");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "rtsp");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "s7-300");
+-  cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "sapr3");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "sip");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "smb");
+   cmbProtocol_items = g_list_append(cmbProtocol_items, (gpointer) "smb2");

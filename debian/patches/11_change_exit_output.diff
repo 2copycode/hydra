@@ -1,0 +1,30 @@
+Description: Force to exit if  doesn't have dependencies to build xhydra.
+Forwarded: not-needed
+Author: epsilon@debian.org
+Last-Update: 2022-04-16
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -59,10 +59,10 @@
+ 	@echo
+ 
+ xhydra:	
+-	-cd hydra-gtk && sh ./make_xhydra.sh
++	cd hydra-gtk && sh ./make_xhydra.sh $(DEB_HOST_GNU_TYPE) $(DEB_BUILD_GNU_TYPE)
+ 
+ pw-inspector: pw-inspector.c
+-	-$(CC) $(OPTS) $(SEC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o pw-inspector $(PWI_LOGO) pw-inspector.c
++	$(CC) $(OPTS) $(SEC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o pw-inspector $(PWI_LOGO) pw-inspector.c
+ 
+ .c.o:	
+ 	$(CC) $(OPTS) $(SEC) $(CFLAGS) $(CPPFLAGS) -c $< $(XDEFINES) $(XIPATHS)
+--- a/hydra-gtk/make_xhydra.sh
++++ b/hydra-gtk/make_xhydra.sh
+@@ -2,7 +2,7 @@
+ PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/gnome/lib/pkgconfig
+ export PKG_CONFIG_PATH
+ echo "Trying to compile xhydra now (hydra gtk gui) - don't worry if this fails, this is really optional ..."
+-./configure
++./configure --host=$1 --build=$2
+ test -e Makefile || {
+   echo "Error: configure wasnt happy. Analyse this:"
+   exit 1

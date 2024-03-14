@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/buildtools.mk
+
+#export DH_VERBOSE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+INSTALL := install -m 755
+
+export CC
+export PKG_CONFIG ?= $(DEB_HOST_GNU_TYPE)-pkg-config
+export DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+export DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	$(INSTALL) hydra $(CURDIR)/debian/hydra/usr/bin
+	$(INSTALL) pw-inspector $(CURDIR)/debian/hydra/usr/bin
+	$(INSTALL) xhydra $(CURDIR)/debian/hydra-gtk/usr/bin
+
+override_dh_install:
+	dh_install
+	iconv -c -f UTF-8 -t UTF-8 $(CURDIR)/debian/hydra/usr/share/hydra/dpl4hydra_local.csv > \
+        $(CURDIR)/debian/hydra/usr/share/hydra/dpl4hydra_local.csv.tmp
+	mv $(CURDIR)/debian/hydra/usr/share/hydra/dpl4hydra_local.csv.tmp \
+        $(CURDIR)/debian/hydra/usr/share/hydra/dpl4hydra_local.csv
+
+# Makefile.orig is part of the upstream's tarball and should not be removed
+override_dh_clean:
+	dh_clean --exclude=Makefile.orig
